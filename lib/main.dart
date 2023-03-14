@@ -3,6 +3,7 @@ import 'package:flutter_navigator_practice/navigator_observer.dart';
 import 'package:flutter_navigator_practice/pages/page_a.dart';
 import 'package:flutter_navigator_practice/pages/page_b.dart';
 import 'package:flutter_navigator_practice/pages/page_c.dart';
+import 'package:flutter_navigator_practice/pages/restorable_page_one.dart';
 
 class CustomRoute {
   static const initial = '/';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      restorationScopeId: 'app',
       navigatorObservers: [
         CustomNavigatorObserver(),
       ],
@@ -80,11 +82,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 // print(Navigator.canPop(context));
                 // print(Navigator.maybeOf(context));
               },
-              child: Text(pageOne.toString()),
-            )
+              child: Text('$pageOne로 향합니다'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Navigator.restorablePush(
+                //     context, (context, arguments) => MaterialPageRoute(builder: (_) => RestorationPageOne()));
+
+                Navigator.restorablePush(context, _buildRoute);
+              },
+              child: Text('Restore로 이동합니다'),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  static Route _buildRoute(BuildContext context, Object? params) {
+    return MaterialPageRoute<void>(
+      builder: (BuildContext context) => RestorationPageOne(),
     );
   }
 }

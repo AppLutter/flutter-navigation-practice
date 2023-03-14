@@ -23,8 +23,9 @@ class _PageBState extends State<PageB> {
       appBar: AppBar(),
       body: Center(
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, CustomRoute.pageC);
+          onPressed: () async {
+            final result = await Navigator.pushNamed(context, CustomRoute.pageC);
+            print('result is $result');
 
             /// true가 될 때까지 pop
             // Navigator.popUntil(context, ModalRoute.withName('/'));
